@@ -1,28 +1,210 @@
-Save as PDF / Print
-Fill out the fields below, then click the button to save the completed document.
-AMPACITY
-Electrical Contracting & Engineering
-CHANGE ORDER
-TO:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ampacity Change Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f0f0f0;
+        }
+        .paper {
+            background-color: white;
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            padding: 0.5in;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        .content-wrapper {
+            flex-grow: 1;
+        }
+        .header {
+            text-align: left;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .company-logo {
+            max-height: 80px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            margin: 2px 0;
+            font-size: 10pt;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr 80px 150px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .info-grid div {
+            border-bottom: 1px solid #ccc;
+            padding: 5px;
+            font-size: 10pt;
+        }
+        .label {
+            font-weight: bold;
+            border: none !important;
+        }
+        .input-field {
+            outline: none;
+            border: none;
+            width: 100%;
+            font-family: inherit;
+            font-size: 10pt;
+        }
+        .work-desc {
+            margin-top: 20px;
+        }
+        .work-desc h3 {
+            font-size: 12pt;
+            text-decoration: underline;
+        }
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            border: 1px solid #eee;
+            padding: 10px;
+            font-family: inherit;
+            font-size: 11pt;
+            resize: none;
+        }
+        .totals-section {
+            margin-top: 30px;
+            border-top: 1px solid #000;
+            padding-top: 10px;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: flex-end;
+        }
+        .total-box {
+            border-bottom: 1px solid #000;
+            width: 200px;
+            text-align: right;
+        }
+        .sig-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        .sig-box {
+            border-top: 1px solid #000;
+            width: 45%;
+            padding-top: 5px;
+            font-size: 9pt;
+            text-align: center;
+        }
+        .document-footer {
+            text-align: center;
+            margin-top: 30px;
+            border-top: 1px solid #ccc;
+            padding-top: 15px;
+            position: relative;
+            bottom: 0;
+        }
+        .document-footer p {
+            font-size: 8pt;
+            color: #777;
+            margin: 0;
+        }
+        .powered-by-logo {
+            max-height: 20px;
+            margin-top: 5px;
+        }
+        @media print {
+            body { background: none; padding: 0; }
+            .paper { box-shadow: none; margin: 0; width: 100%; min-height: initial; padding: 0.5in;}
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
 
-DATE:
-April 28, 2026
-PROJECT:
+<div class="no-print" style="text-align:center; margin-bottom: 20px;">
+    <button onclick="window.print()" style="padding: 10px 20px; cursor: pointer;">Generate PDF / Print</button>
+</div>
 
-P.O. #:
+<div class="paper">
+    <div class="content-wrapper">
+        <div class="header">
+            <img src="image_3.png" alt="Ampacity Electric Logo" class="company-logo">
+            <p>4233 Arthur Kill Road, Suite 2C, Staten Island NY 10309</p>
+            <p>Phone: 718 715-6357 | Email: Gm@AmpacityElectric.Net</p>
+        </div>
 
-RE:
+        <div class="info-grid">
+            <div class="label">To:</div>
+            <div><input class="input-field" type="text" value="JCT Development"></div>
+            <div class="label">Date:</div>
+            <div><input class="input-field" type="text" value="01.08.26"></div>
+            
+            <div class="label">Phone:</div>
+            <div><input class="input-field" type="text"></div>
+            <div class="label">P.O.#</div>
+            <div><input class="input-field" type="text"></div>
+            
+            <div class="label">Project:</div>
+            <div><input class="input-field" type="text" value="250 Central Avenue"></div>
+            <div class="label">CO #</div>
+            <div><input class="input-field" type="text"></div>
+            
+            <div class="label">Re:</div>
+            <div><input class="input-field" type="text"></div>
+            <div class="label">Attn:</div>
+            <div><input class="input-field" type="text"></div>
+        </div>
 
-ATTN:
+        <div class="work-desc">
+            <h3>Work Description:</h3>
+            <p>We Hereby agree to make the change(s) specified below:</p>
+            <textarea placeholder="Enter detailed work description here..."></textarea>
+        </div>
 
-Work Description
-We hereby agree to make the change(s) specified below:
-Labor Total:
+        <div class="totals-section">
+            <p style="font-size: 9pt;">NOTE: This Change Order becomes part of and in conformance with the existing contract in place.</p>
+            
+            <div class="total-row">
+                <span>Total price for this Change Order:</span>
+                <div class="total-box">$ <input style="width:150px; border:none; text-align:right;" type="text"></div>
+            </div>
 
-Materials Total:
+            <div class="total-row">
+                <div class="sig-box" style="text-align: left; border:none; padding:0;">
+                    <div style="border-top:1px solid #000; padding-top:5px;">Authorized Signature (Contractor)</div>
+                </div>
+                <div style="text-align: right;">
+                    <div>Previous Contract Amount: $ <input style="width:100px; border:none; border-bottom:1px solid #000;" type="text"></div>
+                    <div style="margin-top:10px; font-weight:bold;">Revised Contract Total: $ <input style="width:100px; border:none; border-bottom:1px solid #000;" type="text"></div>
+                </div>
+            </div>
+        </div>
 
-TOTAL AMOUNT:
+        <div style="margin-top: 30px; border: 1px solid #000; padding: 10px;">
+            <p style="font-size: 9pt; margin:0;"><strong>ACCEPTED:</strong> The above price and specifications of the Change Order are satisfactory and are hereby accepted. All work is to be performed under the same terms and conditions as specified in the original contract unless otherwise specified.</p>
+            
+            <div class="sig-row">
+                <div class="sig-box">Signature (Owner/Contractor)</div>
+                <div class="sig-box">Date Of Acceptance</div>
+            </div>
+        </div>
+    </div>
 
-Terms: All work to be completed in a workmanlike manner according to standard practices. Any alteration or deviation from original specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate.
-AUTHORIZED SIGNATURE (AMPACITY)
-ACCEPTED BY (CLIENT/GC)
+    <div class="document-footer">
+        <p>Powered by</p>
+        <img src="image_4.png" alt="Aesthetic Consulting Logo" class="powered-by-logo">
+    </div>
+</div>
+
+</body>
+</html>
