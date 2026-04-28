@@ -1,102 +1,544 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ampacity Change Order - New</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
-        .paper { background-color: white; width: 8.5in; min-height: 11in; margin: 0 auto; padding: 0.5in; box-shadow: 0 0 10px rgba(0,0,0,0.1); box-sizing: border-box; display: flex; flex-direction: column; }
-        .header { text-align: left; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }
-        .header h1 { margin: 0; font-size: 26pt; letter-spacing: 3px; font-weight: bold; color: #000; }
-        .header p { margin: 2px 0; font-size: 10pt; }
-        .info-grid { display: grid; grid-template-columns: 80px 1fr 80px 1fr; gap: 8px; margin-bottom: 20px; }
-        .info-grid div { border-bottom: 1px solid #ccc; padding: 4px; font-size: 10pt; height: 18px; }
-        .label { font-weight: bold; border: none !important; }
-        .input-field { border: none; outline: none; width: 100%; font-family: inherit; font-size: 10pt; background: transparent; }
-        .work-desc { margin-top: 10px; flex-grow: 1; }
-        .work-desc h3 { font-size: 12pt; text-decoration: underline; margin-bottom: 5px; }
-        textarea { width: 100%; min-height: 350px; border: 1px solid #eee; padding: 10px; font-family: inherit; font-size: 11pt; resize: none; line-height: 1.5; }
-        .totals-section { margin-top: 20px; border-top: 1px solid #000; padding-top: 10px; }
-        .total-row { display: flex; justify-content: space-between; margin-bottom: 10px; align-items: baseline; }
-        .total-box { border-bottom: 1px solid #000; width: 180px; text-align: right; font-weight: bold; font-size: 11pt; }
-        .sig-container { margin-top: 25px; border: 1px solid #000; padding: 12px; }
-        .sig-row { display: flex; justify-content: space-between; margin-top: 35px; }
-        .sig-box { border-top: 1px solid #000; width: 45%; padding-top: 5px; font-size: 9pt; text-align: center; }
-        .footer { text-align: center; margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
-        .powered-by-logo { max-height: 35px; margin-top: 5px; }
-        @media print { body { background: none; padding: 0; } .paper { box-shadow: none; margin: 0; width: 100%; min-height: initial; padding: 0.5in; } .no-print { display: none; } textarea { border: none; } }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ampacity Electric – Change Order</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–black: #111111;
+–red: #cc0000;
+–border: #aaaaaa;
+–light-bg: #f7f7f7;
+–label-color: #222;
+–font: ‘Barlow’, sans-serif;
+}
+
+body {
+background: #e8e8e8;
+font-family: var(–font);
+color: var(–black);
+padding: 30px 20px 60px;
+}
+
+/* ── SCREEN TOOLBAR ── */
+.toolbar {
+max-width: 820px;
+margin: 0 auto 18px;
+display: flex;
+justify-content: flex-end;
+gap: 10px;
+}
+.toolbar button {
+font-family: var(–font);
+font-size: 13px;
+font-weight: 600;
+letter-spacing: .06em;
+text-transform: uppercase;
+padding: 8px 22px;
+border: none;
+cursor: pointer;
+border-radius: 3px;
+transition: background .15s;
+}
+.btn-print  { background: var(–black); color: #fff; }
+.btn-print:hover  { background: #333; }
+.btn-reset  { background: #fff; color: var(–black); border: 1.5px solid #bbb; }
+.btn-reset:hover  { background: #f0f0f0; }
+
+/* ── PAGE WRAPPER ── */
+#page {
+max-width: 820px;
+margin: 0 auto;
+background: #fff;
+padding: 36px 40px 30px;
+box-shadow: 0 4px 32px rgba(0,0,0,.18);
+}
+
+/* ── HEADER ROW ── */
+.header-row {
+display: flex;
+align-items: stretch;
+justify-content: space-between;
+gap: 16px;
+margin-bottom: 14px;
+}
+.logo-box {
+border: 2px solid var(–black);
+padding: 12px 20px;
+display: flex;
+align-items: center;
+flex: 1;
+max-width: 420px;
+}
+.logo-box img {
+max-height: 54px;
+width: auto;
+object-fit: contain;
+}
+.co-badge {
+border: 2px solid var(–black);
+display: flex;
+flex-direction: column;
+min-width: 170px;
+}
+.co-badge .co-title {
+background: var(–red);
+color: #fff;
+font-weight: 700;
+font-size: 15px;
+text-align: center;
+padding: 5px 10px;
+letter-spacing: .04em;
+}
+.co-badge .co-number {
+flex: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 20px;
+font-weight: 700;
+padding: 6px 10px;
+}
+.co-badge .co-number input {
+width: 60px;
+font-size: 20px;
+font-weight: 700;
+text-align: center;
+border: none;
+outline: none;
+font-family: var(–font);
+color: var(–black);
+}
+
+/* ── ADDRESS BLOCK ── */
+.address-block {
+text-align: center;
+font-size: 12px;
+color: #444;
+margin-bottom: 18px;
+line-height: 1.7;
+}
+
+/* ── FIELD GRID ── */
+.field-grid {
+border: 1.5px solid var(–border);
+margin-bottom: 14px;
+}
+.field-row {
+display: flex;
+border-bottom: 1px solid var(–border);
+}
+.field-row:last-child { border-bottom: none; }
+.field-cell {
+display: flex;
+align-items: center;
+padding: 4px 8px;
+flex: 1;
+border-right: 1px solid var(–border);
+gap: 6px;
+}
+.field-cell:last-child { border-right: none; }
+.field-cell label {
+font-weight: 700;
+font-size: 11.5px;
+white-space: nowrap;
+min-width: 52px;
+color: var(–label-color);
+}
+.field-cell input {
+flex: 1;
+border: none;
+outline: none;
+font-family: var(–font);
+font-size: 12px;
+color: var(–black);
+background: transparent;
+min-width: 0;
+}
+.field-cell.narrow { flex: 0 0 200px; }
+.field-cell.date-cell { flex: 0 0 180px; }
+
+/* ── WORK DESCRIPTION ── */
+.section-header {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+border: 1.5px solid var(–border);
+border-bottom: none;
+padding: 4px 8px;
+}
+.section-header span {
+font-weight: 700;
+font-size: 11.5px;
+}
+.work-area {
+border: 1.5px solid var(–border);
+min-height: 320px;
+}
+.work-area textarea {
+width: 100%;
+min-height: 320px;
+border: none;
+outline: none;
+font-family: var(–font);
+font-size: 12.5px;
+color: var(–black);
+padding: 10px;
+resize: vertical;
+line-height: 1.7;
+background: transparent;
+}
+
+/* ── NOTE + FOOTER TABLE ── */
+.note-bar {
+border: 1.5px solid var(–border);
+border-bottom: none;
+padding: 5px 8px;
+font-size: 11.5px;
+line-height: 1.5;
+}
+.note-bar strong { color: var(–red); }
+.agree-bar {
+border: 1.5px solid var(–border);
+border-bottom: none;
+padding: 5px 8px;
+font-size: 11.5px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.agree-bar strong { color: var(–red); }
+.agree-bar .agree-amount {
+display: flex;
+align-items: center;
+gap: 4px;
+}
+.agree-bar .agree-amount span { font-weight: 700; }
+.agree-bar .agree-amount input {
+width: 100px;
+border: none;
+border-bottom: 1px solid var(–border);
+outline: none;
+font-family: var(–font);
+font-size: 12px;
+text-align: right;
+background: transparent;
+}
+
+.sig-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+border: 1.5px solid var(–border);
+}
+.sig-cell {
+padding: 5px 8px;
+border-right: 1px solid var(–border);
+font-size: 11.5px;
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.sig-cell:last-child, .sig-cell:nth-child(even) { border-right: none; }
+.sig-cell label { font-weight: 700; white-space: nowrap; }
+.sig-cell input {
+flex: 1;
+border: none;
+border-bottom: 1px solid var(–border);
+outline: none;
+font-family: var(–font);
+font-size: 11.5px;
+background: transparent;
+min-width: 0;
+}
+.sig-cell.amount-cell {
+border-right: none;
+justify-content: flex-end;
+gap: 8px;
+}
+.sig-cell.amount-cell input {
+width: 100px;
+text-align: right;
+}
+
+/* ── ACCEPTED BOX ── */
+.accepted-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+border: 1.5px solid var(–border);
+border-top: none;
+margin-top: 0;
+}
+.accepted-left {
+padding: 7px 8px;
+border-right: 1px solid var(–border);
+font-size: 11px;
+line-height: 1.6;
+}
+.accepted-left strong { color: var(–red); }
+.accepted-right {
+padding: 7px 8px;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+gap: 8px;
+}
+.accepted-right .sig-line {
+display: flex;
+flex-direction: column;
+gap: 2px;
+font-size: 11px;
+}
+.accepted-right .sig-line input {
+border: none;
+border-bottom: 1px solid var(–border);
+outline: none;
+font-family: var(–font);
+font-size: 11.5px;
+background: transparent;
+width: 100%;
+}
+.accepted-right .sig-line span {
+color: #555;
+font-size: 10.5px;
+}
+
+/* ── POWERED BY ── */
+.powered-by {
+display: flex;
+align-items: center;
+justify-content: flex-end;
+gap: 8px;
+margin-top: 16px;
+padding-top: 10px;
+border-top: 1px solid #ddd;
+}
+.powered-by span {
+font-size: 10px;
+font-weight: 600;
+letter-spacing: .08em;
+text-transform: uppercase;
+color: #888;
+}
+.powered-by img {
+height: 28px;
+width: auto;
+object-fit: contain;
+opacity: .75;
+}
+
+/* ── PRINT ── */
+@media print {
+body { background: #fff; padding: 0; }
+.toolbar { display: none !important; }
+#page {
+box-shadow: none;
+max-width: 100%;
+padding: 18px 22px 16px;
+margin: 0;
+}
+input, textarea {
+border: none !important;
+background: transparent !important;
+}
+textarea { resize: none; overflow: hidden; }
+.work-area textarea { min-height: unset; }
+}
+</style>
+
 </head>
 <body>
 
-<div class="no-print" style="text-align:center; margin-bottom: 20px;">
-    <button onclick="window.print()" style="padding: 12px 24px; cursor: pointer; background: #004a99; color: white; border: none; border-radius: 4px; font-weight: bold;">Print Change Order</button>
+<!-- TOOLBAR (screen only) -->
+
+<div class="toolbar">
+  <button class="btn-reset" onclick="resetForm()">Reset</button>
+  <button class="btn-print" onclick="window.print()">🖨 Print / Save PDF</button>
 </div>
 
-<div class="paper">
-    <div class="header">
-        <h1>AMPACITY ELECTRIC</h1>
-        <p>4233 Arthur Kill Road, Suite 2C, Staten Island NY 10309</p>
-        <p>Phone: 718 715-6357 | Email: Gm@AmpacityElectric.Net</p>
-    </div>
+<!-- PAGE -->
 
-    <div class="info-grid">
-        <div class="label">To:</div>
-        <div><input class="input-field" type="text" value="JCT Development"></div>
-        <div class="label">Date:</div>
-        <div><input class="input-field" type="text" value="01.08.26"></div>
-        <div class="label">Project:</div>
-        <div><input class="input-field" type="text" value="250 Central Avenue"></div>
-        <div class="label">P.O.#</div>
-        <div><input class="input-field" type="text"></div>
-        <div class="label">Re:</div>
-        <div><input class="input-field" type="text" value="HVAC Ampacity Corrections"></div>
-        <div class="label">Attn:</div>
-        <div><input class="input-field" type="text" value="Andrew Werther"></div>
-    </div>
+<div id="page">
 
-    <div class="work-desc">
-        <h3>Work Description:</h3>
-        <p style="font-size: 10pt; margin: 5px 0;">We Hereby agree to make the change(s) specified below:</p>
-        <textarea placeholder="Disconnect previously installed feeders..."></textarea>
-    </div>
+  <!-- HEADER -->
 
-    <div class="totals-section">
-        <p style="font-size: 9pt; margin-bottom: 15px;">NOTE: This Change Order becomes part of and in conformance with the existing contract in place.</p>
-        <div class="total-row">
-            <span style="font-weight: bold;">We Agree: Hereby to make the change(s) specified above at this total price:</span>
-            <div class="total-box">$ <input class="input-field" style="width: 140px; text-align: right;" type="text" placeholder="0.00"></div>
-        </div>
-        <div class="total-row" style="margin-top: 15px;">
-            <div style="flex: 1; border-top: 1px solid #000; margin-right: 40px; padding-top: 5px; font-size: 9pt; text-align: center;">Authorized Signature (Contractor)</div>
-            <div style="width: 300px;">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                    <span style="font-size: 10pt;">Previous Contract Amount:</span>
-                    <div style="border-bottom: 1px solid #000; width: 100px; text-align: right;">$ <input class="input-field" style="width: 80px; text-align: right;" type="text"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-weight: bold;">
-                    <span style="font-size: 10pt;">Revised Contract Total:</span>
-                    <div style="border-bottom: 2px solid #000; width: 100px; text-align: right;">$ <input class="input-field" style="width: 80px; text-align: right; font-weight: bold;" type="text"></div>
-                </div>
-            </div>
-        </div>
+  <div class="header-row">
+    <div class="logo-box">
+      <img src="/mnt/user-data/uploads/IMG_6720.png" alt="Ampacity Electric" id="logo-img"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22280%22 height=%2254%22><text y=%2238%22 font-size=%2228%22 font-family=%22sans-serif%22 font-weight=%22700%22>AMPACITY ELECTRIC</text></svg>'">
     </div>
+    <div class="co-badge">
+      <div class="co-title">Change Order</div>
+      <div class="co-number"><input type="text" value="2" id="co-num" title="Change Order #"></div>
+    </div>
+  </div>
 
-    <div class="sig-container">
-        <p style="font-size: 9pt; margin: 0;"><strong>ACCEPTED:</strong> The above price and specifications of the Change Order are satisfactory and are hereby accepted. All work is to be performed under the same terms and conditions as specified in the original contract.</p>
-        <div class="sig-row">
-            <div class="sig-box">Signature (Owner/Contractor)</div>
-            <div class="sig-box">Date Of Acceptance</div>
-        </div>
-    </div>
+  <!-- ADDRESS -->
 
-    <div class="footer">
-        <p style="font-size: 8pt; color: #777; margin: 0;">Powered by</p>
-        <img src="data:image/png;base64,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" alt="Aesthetic Consulting" class="powered-by-logo">
+  <div class="address-block">
+    4233 Arthur Kill Road, Suite 2C, Staten Island NY 10309<br>
+    Phone: 718 715-6357 &nbsp;|&nbsp; Email: Gm@AmpacityElectric.Net
+  </div>
+
+  <!-- FIELD GRID -->
+
+  <div class="field-grid">
+    <div class="field-row">
+      <div class="field-cell">
+        <label>To:</label>
+        <input type="text" id="to" value="JCT Development" placeholder="Recipient name">
+      </div>
+      <div class="field-cell narrow">
+        <label>Phone:</label>
+        <input type="text" id="phone" placeholder="Phone number">
+      </div>
+      <div class="field-cell date-cell">
+        <label>Date:</label>
+        <input type="text" id="date" value="01.08.26" placeholder="MM.DD.YY">
+      </div>
     </div>
-</div>
+    <div class="field-row">
+      <div class="field-cell">
+        <label>Project:</label>
+        <input type="text" id="project" value="250 Central Avenue" placeholder="Project name / address">
+      </div>
+      <div class="field-cell narrow">
+        <label>P.O. #</label>
+        <input type="text" id="po" placeholder="PO number">
+      </div>
+      <div class="field-cell date-cell" style="visibility:hidden;"></div>
+    </div>
+    <div class="field-row">
+      <div class="field-cell">
+        <label>Re:</label>
+        <input type="text" id="re" value="HVAC Ampacity Corrections" placeholder="Subject">
+      </div>
+      <div class="field-cell narrow">
+        <label>Attn:</label>
+        <input type="text" id="attn" value="Andrew Werther" placeholder="Attention">
+      </div>
+      <div class="field-cell date-cell" style="visibility:hidden;"></div>
+    </div>
+  </div>
+
+  <!-- WORK DESCRIPTION -->
+
+  <div class="section-header">
+    <span>Work Description:</span>
+    <span>Amount:</span>
+  </div>
+  <div class="work-area">
+    <textarea id="work-desc" placeholder="Describe the work changes here…">We Hereby agree to make the change(s) specified below:
+
+Disconnect previously installed feeders from each apartment panel to roof junction box.
+Furnish and Install new feeders as follows</textarea>
+
+  </div>
+
+  <!-- NOTE -->
+
+  <div class="note-bar">
+    <strong>NOTE:</strong> This Change Order becomes part of and in conformance with the existing contract in place.
+  </div>
+
+  <!-- WE AGREE ROW -->
+
+  <div class="agree-bar">
+    <span><strong>We Agree:</strong> Hereby to make the change(s) specified above at this total price:</span>
+    <div class="agree-amount">
+      <span>$</span>
+      <input type="text" id="agree-amount" placeholder="0.00">
+    </div>
+  </div>
+
+  <!-- SIG GRID -->
+
+  <div class="sig-grid">
+    <div class="sig-cell">
+      <label>Date:</label>
+      <input type="text" id="sig-date" placeholder="Date">
+    </div>
+    <div class="sig-cell">
+      <label>Previous Contract Amount:</label>
+      <input type="text" id="prev-amount" placeholder="">
+    </div>
+    <div class="sig-cell" style="border-top:1px solid var(--border);">
+      <label>Authorized Signature (Contractor):</label>
+      <input type="text" id="auth-sig" placeholder="">
+    </div>
+    <div class="sig-cell amount-cell" style="border-top:1px solid var(--border);">
+      <label>Revised Contract Total:</label>
+      <span>$</span>
+      <input type="text" id="revised-total" placeholder="0.00">
+    </div>
+  </div>
+
+  <!-- ACCEPTED -->
+
+  <div class="accepted-grid">
+    <div class="accepted-left">
+      <strong>ACCEPTED:</strong> The above price and specifications of the Change Order
+      are satisfactory and are hereby accepted. All work is to be performed
+      under the same terms and conditions as specified in the original
+      contract unless otherwise specified.
+    </div>
+    <div class="accepted-right">
+      <div class="sig-line">
+        <input type="text" id="accept-date" placeholder="">
+        <span>Date Of Acceptance</span>
+      </div>
+      <div class="sig-line">
+        <input type="text" id="owner-sig" placeholder="">
+        <span>Signature (Owner/Contractor)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- POWERED BY -->
+
+  <div class="powered-by">
+    <span>Powered by</span>
+    <img src="/mnt/user-data/uploads/Aesthetic_E_Consulting_Logo__Transparent_Background_.png"
+         alt="Aesthetic Consulting"
+         onerror="this.outerHTML='<span style=\'font-size:11px;color:#666;font-weight:700;\'>Aesthetic Consulting</span>'">
+  </div>
+
+</div><!-- /#page -->
+
+<script>
+  function resetForm() {
+    if (!confirm('Reset all fields to defaults?')) return;
+    document.getElementById('to').value = 'JCT Development';
+    document.getElementById('phone').value = '';
+    document.getElementById('date').value = '01.08.26';
+    document.getElementById('project').value = '250 Central Avenue';
+    document.getElementById('po').value = '';
+    document.getElementById('re').value = 'HVAC Ampacity Corrections';
+    document.getElementById('attn').value = 'Andrew Werther';
+    document.getElementById('co-num').value = '2';
+    document.getElementById('work-desc').value =
+      'We Hereby agree to make the change(s) specified below:\n\nDisconnect previously installed feeders from each apartment panel to roof junction box.\nFurnish and Install new feeders as follows';
+    document.getElementById('agree-amount').value = '';
+    document.getElementById('sig-date').value = '';
+    document.getElementById('prev-amount').value = '';
+    document.getElementById('auth-sig').value = '';
+    document.getElementById('revised-total').value = '';
+    document.getElementById('accept-date').value = '';
+    document.getElementById('owner-sig').value = '';
+  }
+
+  // Auto-expand textarea as user types
+  const ta = document.getElementById('work-desc');
+  ta.addEventListener('input', () => {
+    ta.style.height = 'auto';
+    ta.style.height = Math.max(320, ta.scrollHeight) + 'px';
+  });
+</script>
 
 </body>
 </html>
-
