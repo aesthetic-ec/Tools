@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Load Calculator — Aesthetic E Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ============================================
+   BRAND PALETTE 
+============================================ */
+:root {
+  --charcoal: #1a1a1a;   
+  --white:    #ffffff;   
+  --silver:   #8e8e8e;   
+  --light1:   #f5f5f5;   
+  --light2:   #ebebeb;   
+  --border:   #c8c8c8;   
+  --green:    #1f6b42;   
+  --red:      #b83232;   
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--white);
+  color: var(--charcoal);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   NAV 
+============================================ */
+nav.site-nav {
+  background-color: var(--charcoal) !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  width: 100%;
+}
+.nav-brand { display: flex; align-items: center; gap: 12px; }
+.nav-logo {
+  width: 28px; height: 28px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+.nav-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.nav-back {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--silver);
+  border: 1px solid #444;
+  padding: 4px 12px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.nav-back:hover { color: var(--white); }
+
+/* ============================================
+   HERO 
+============================================ */
+.hero {
+  padding: 52px 40px 36px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 76px;
+  line-height: 0.92;
+  letter-spacing: 0.02em;
+  color: var(--charcoal);
+  margin-bottom: 16px;
+}
+.hero-sub {
+  font-size: 15px;
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.65;
+  max-width: 480px;
+}
+
+/* ============================================
+   CONTENT WRAPPER
+============================================ */
+.content {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 0 40px 80px;
+}
+
+.section { margin-bottom: 52px; }
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--charcoal) !important;
+}
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  color: var(--charcoal);
+}
+.section-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--silver);
+  letter-spacing: 0.07em;
+}
+
+/* ============================================
+   CALCULATOR STYLES (Adapted to Brand)
+============================================ */
+.calc-wrapper {
+  background: var(--light1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 30px;
+}
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.input-group:last-child {
+  border-bottom: none;
+}
+
+label {
+  flex: 1;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--charcoal);
+}
+
+.sub-text {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--silver);
+  letter-spacing: 0.05em;
+  font-weight: normal;
+  margin-top: 4px;
+}
+
+input[type="number"] {
+  width: 120px;
+  padding: 10px;
+  font-size: 14px;
+  font-family: 'DM Mono', monospace;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-align: right;
+  background: var(--white);
+  color: var(--charcoal);
+  transition: border-color 0.18s;
+}
+
+input[type="number"]:focus {
+  outline: none;
+  border-color: var(--charcoal);
+}
+
+.result-box {
+  background: #edf7f1; /* Soft brand green */
+  border: 1px solid var(--green);
+  padding: 24px;
+  border-radius: 6px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.result-box h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  color: var(--green);
+}
+
+.final-amps {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 56px;
+  letter-spacing: 0.02em;
+  color: var(--green);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.calculation-step {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--silver);
+  margin-bottom: 8px;
+}
+
+.calculation-step span:last-child {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
+
+.bold-step {
+  font-weight: 600;
+  color: var(--charcoal);
+  margin-top: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+.bold-step span:last-child {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ============================================
+   FOOTER
+============================================ */
+footer.site-footer {
+  background-color: var(--charcoal) !important;
+  padding: 22px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--silver);
+  letter-spacing: 0.08em;
+}
+.footer-logo {
+  width: 22px; height: 22px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.35;
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 640px) {
+  nav.site-nav { padding: 14px 20px; }
+  .hero { padding: 36px 20px 24px; }
+  .hero-title { font-size: 52px; }
+  .content { padding: 0 20px 60px; }
+  .input-group { flex-direction: column; align-items: flex-start; gap: 10px; }
+  input[type="number"] { width: 100%; }
+  footer.site-footer {
+    padding: 16px 20px;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-brand">
+    <img class="nav-logo" src="data:image/png;base64,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
