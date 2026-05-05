@@ -578,10 +578,12 @@ print-color-adjust: exact;
     <div class="phase-header" onclick="togglePhase('phase4')">
       <div class="phase-icon">💰</div>
       <div class="phase-title">Phase 5 — Billing Setup</div>
-      <div class="phase-count" id="count-phase4">0/4</div>
+      <div class="phase-count" id="count-phase4">0/6</div>
       <div class="phase-chevron">▼</div>
     </div>
     <div class="phase-body">
+      <div class="check-item" onclick="toggle(this)"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-title">Discuss financial data management scope with client <span class="item-tag tag-action">Action</span></div><div class="item-detail">Does Aesthetic E Consulting have access to requisitions, AIA billing, change orders, and budget tracking? Document the decision — this determines portal security level and retainer tier. If yes, upgrade portal to Netlify Identity with individual login before sharing access.</div></div></div>
+      <div class="check-item" onclick="toggle(this)"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-title">Configure portal security based on scope decision <span class="item-tag tag-action">Action</span></div><div class="item-detail">Standard scope — site-wide PIN sufficient. Financial data access confirmed — upgrade to Netlify Identity, create individual client login, assign folder access permissions before sharing portal URL.</div></div></div>
       <div class="check-item" onclick="toggle(this)"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-title">Confirm billing schedule with client <span class="item-tag tag-action">Action</span></div><div class="item-detail">When are AIAs due? What's the requisition cycle? Document this.</div></div></div>
       <div class="check-item" onclick="toggle(this)"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-title">Save initial contract value and scope in billing folder <span class="item-tag tag-drive">Drive</span></div><div class="item-detail">Goes in 08_Billing_&amp;_Requisitions — this is your billing baseline</div></div></div>
       <div class="check-item" onclick="toggle(this)"><div class="checkbox"><span class="check-icon">✓</span></div><div class="item-content"><div class="item-title">Set up billing flag column on Monday board <span class="item-tag tag-monday">Monday</span></div><div class="item-detail">Checkbox column — check it when a task or issue affects the current requisition</div></div></div>
@@ -598,7 +600,7 @@ print-color-adjust: exact;
 
 <script>
   const phases = ['phase0','phase1','phase2','phase3','phase4'];
-  const total = 29;
+  const total = 31;
 
   function updateCode() {
     const name = (document.getElementById('projName').value || 'ProjectName').replace(/\s+/g, '');
