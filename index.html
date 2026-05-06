@@ -380,7 +380,7 @@ background: transparent !important;
 </style>
 </head>
 <body>
-<div id="login-overlay" style="display:none;position:fixed;inset:0;z-index:9998;background:#1a1a1a;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
+<div id="login-overlay" style="display:flex;position:fixed;inset:0;z-index:9998;background:#1a1a1a;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
   <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.2em;color:#ffffff;text-align:center;">Aesthetic E Consulting</div>
   <div style="font-family:monospace;font-size:11px;letter-spacing:0.15em;color:#8e8e8e;text-align:center;">Internal Portal · Authorized Access Only</div>
 </div>
@@ -512,10 +512,11 @@ background: transparent !important;
 </footer>
 <script>
   window.netlifyIdentity.on('init', function(user) {
-    if (!user) {
-      window.netlifyIdentity.open();
+    if (user) {
+      document.getElementById('login-overlay').style.display = 'none';
     }
     window.netlifyIdentity.on('login', function() {
+      document.getElementById('login-overlay').style.display = 'none';
       document.location.reload();
     });
     window.netlifyIdentity.on('close', function() {
@@ -523,6 +524,9 @@ background: transparent !important;
         window.netlifyIdentity.open();
       }
     });
+    if (!user) {
+      window.netlifyIdentity.open();
+    }
   });
 </script>
 </body>
