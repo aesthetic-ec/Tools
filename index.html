@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js" data-netlify-identity-menu></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aesthetic E Consulting — Hub</title>
@@ -511,29 +511,17 @@ background: transparent !important;
   <div>portal.aesthetic-ec.com</div>
 </footer>
 <script>
-  // THIS IS THE MISSING PIECE: It turns the widget on!
-  window.netlifyIdentity.init(); 
-
-  window.netlifyIdentity.on('init', function(user) {
-    if (user) {
-      document.getElementById('login-overlay').style.display = 'none';
-    } else {
-      setTimeout(function() {
-        window.netlifyIdentity.open('login');
-      }, 800);
-    }
-  });
-  window.netlifyIdentity.on('login', function() {
-    document.getElementById('login-overlay').style.display = 'none';
-    document.location.reload();
-  });
-  window.netlifyIdentity.on('close', function() {
-    if (!window.netlifyIdentity.currentUser()) {
-      setTimeout(function() {
-        window.netlifyIdentity.open('login');
-      }, 300);
-    }
-  });
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.open("login");
+      }
+    });
+    window.netlifyIdentity.on("login", () => {
+      document.getElementById("login-overlay").style.display = "none";
+      document.location.reload();
+    });
+  }
 </script>
 </body>
 </html>
