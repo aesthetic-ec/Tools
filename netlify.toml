@@ -1,13 +1,61 @@
 [build]
   publish = "."
 
+# Admin — full access to everything
 [[redirects]]
   from = "/*"
-  to = "/.netlify/identity"
-  status = 401
-  force = false
-  conditions = {Role = ["authenticated"]}
+  to = "/:splat"
+  status = 200
+  conditions = {Role = ["admin"]}
 
+# Ampacity — access to ampacity folder only
+[[redirects]]
+  from = "/ampacity/*"
+  to = "/ampacity/:splat"
+  status = 200
+  conditions = {Role = ["ampacity", "admin"]}
+
+# SRC Interiors — access to src-interiors folder only
+[[redirects]]
+  from = "/src-interiors/*"
+  to = "/src-interiors/:splat"
+  status = 200
+  conditions = {Role = ["src", "admin"]}
+
+# LKM Contracting — access to lkm-contracting folder only
+[[redirects]]
+  from = "/lkm-contracting/*"
+  to = "/lkm-contracting/:splat"
+  status = 200
+  conditions = {Role = ["lkm", "admin"]}
+
+# Block tools, showcase, ampacity, src, lkm from non-admin non-role users
+[[redirects]]
+  from = "/tools/*"
+  to = "/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/showcase/*"
+  to = "/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/ampacity/*"
+  to = "/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/src-interiors/*"
+  to = "/index.html"
+  status = 302
+
+[[redirects]]
+  from = "/lkm-contracting/*"
+  to = "/index.html"
+  status = 302
+
+# Default — catch all, require login
 [[redirects]]
   from = "/*"
   to = "/index.html"
