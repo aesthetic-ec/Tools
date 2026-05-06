@@ -508,7 +508,7 @@ to   { opacity: 1; transform: translateY(0); }
   <div>portal.aesthetic-ec.com</div>
 </footer>
 <script>
-  // Hide all page content until authenticated
+  // Hide page content until authenticated
   document.body.style.overflow = 'hidden';
 
   if (window.netlifyIdentity) {
@@ -519,21 +519,24 @@ to   { opacity: 1; transform: translateY(0); }
         if (overlay) overlay.classList.add('hidden');
         document.body.style.overflow = '';
       } else {
-        // Not logged in — show overlay, open login modal
-        window.netlifyIdentity.open();
+        // Not logged in — wait briefly then open modal
+        setTimeout(() => {
+          window.netlifyIdentity.open();
+        }, 500);
 
         // If user closes modal without logging in — reopen it
         window.netlifyIdentity.on('close', () => {
           const currentUser = window.netlifyIdentity.currentUser();
           if (!currentUser) {
-            window.netlifyIdentity.open();
+            setTimeout(() => {
+              window.netlifyIdentity.open();
+            }, 300);
           }
         });
       }
     });
 
     window.netlifyIdentity.on('login', () => {
-      // Hide overlay with fade then reload
       const overlay = document.getElementById('login-overlay');
       if (overlay) overlay.classList.add('hidden');
       document.body.style.overflow = '';
