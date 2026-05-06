@@ -438,10 +438,16 @@
         window.netlifyIdentity.on("login", () => {
           document.location.reload();
         });
+        // If user closes modal without logging in — reopen it
+        window.netlifyIdentity.on("close", () => {
+          const currentUser = window.netlifyIdentity.currentUser();
+          if (!currentUser) {
+            window.netlifyIdentity.open();
+          }
+        });
       }
     });
   }
 </script>
-
 </body>
 </html>
