@@ -511,17 +511,34 @@ background: transparent !important;
   <div>portal.aesthetic-ec.com</div>
 </footer>
 <script>
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", user => {
-      if (!user) {
-        window.netlifyIdentity.open("login");
-      }
-    });
-    window.netlifyIdentity.on("login", () => {
-      document.getElementById("login-overlay").style.display = "none";
-      document.location.reload();
-    });
-  }
+  // 1. Tell it what to do on startup (Before we actually start it)
+  window.netlifyIdentity.on('init', function(user) {
+    if (user) {
+      // If they are logged in, hide the black screen
+      document.getElementById('login-overlay').style.display = 'none';
+    } else {
+      // If they are NOT logged in, open the login box
+      window.netlifyIdentity.open('login');
+    }
+  });
+
+  // 2. Tell it what to do when they successfully log in
+  window.netlifyIdentity.on('login', function(user) {
+    // Hide the black screen and close the modal (NO page reload here!)
+    document.getElementById('login-overlay').style.display = 'none';
+    window.netlifyIdentity.close();
+  });
+
+  // 3. Force the box back open if they try to close it without logging in
+  window.netlifyIdentity.on('close', function() {
+    if (!window.netlifyIdentity.currentUser()) {
+      window.netlifyIdentity.open('login');
+    }
+  });
+
+  // 4. NOW turn it on! (This must always be dead last)
+  window.netlifyIdentity.init(); 
 </script>
+
 </body>
 </html>
