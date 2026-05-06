@@ -511,6 +511,9 @@ background: transparent !important;
   <div>portal.aesthetic-ec.com</div>
 </footer>
 <script>
+  // THIS IS THE MISSING PIECE: It turns the widget on!
+  window.netlifyIdentity.init(); 
+
   window.netlifyIdentity.on('init', function(user) {
     if (user) {
       document.getElementById('login-overlay').style.display = 'none';
